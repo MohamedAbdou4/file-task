@@ -7,7 +7,7 @@ pipeline {
         stage('get code') {
             steps {
                 // Get some code from a GitHub repository
-                git 'https://github.com/mahmoud254/jenkins_nodejs_example'
+                git 'https://github.com/MohamedAbdou4/GKE-Pipeline-FinalProject'
             }
         }
         
@@ -18,9 +18,9 @@ pipeline {
                 
                 // to build docker image from node app and push it to my docker hub
                 sh '''
-                    docker build . -f dockerfile -t mohamedabdou4/final-project-node-app
+                    docker build . -f dockerfile -t mohamedabdou4/final-project-node-app-1
                     docker login -u ${USERNAME} -p ${PASSWORD}
-                    docker push mohamedabdou4/final-project-node-app
+                    docker push mohamedabdou4/final-project-node-app-1
                 '''
                 }
             }   
@@ -30,8 +30,8 @@ pipeline {
             steps{
                 // to deploy node app as a k8s deployment
                 sh ''' 
-                    kubectl apply -n node-app-ns -f app-K8s/node-app-dep.yml
-                    kubectl apply -n node-app-ns -f app-K8s/node-app-svc.yml
+                    kubectl apply -n node-app-ns -f /home/moabdou4/jenkins_home/app-K8s/node-app-dep.yml
+                    kubectl apply -n node-app-ns -f /home/moabdou4/jenkins_home/app-K8s/node-app-svc.yml
                 '''
             }
         }
